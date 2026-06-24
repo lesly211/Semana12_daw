@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block extra_css %}
+<style>
+    .global-errors {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        color: #fca5a5;
+    }
+    .field-errors-summary {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        color: #fde68a;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="glass-card">
+    <h1>{{ titulo }}</h1>
+    <p class="subtitle">Formulario de producto con validaciones por campo y globales.</p>
+
+    {% if form.non_field_errors %}
+        <div class="global-errors">
+            <strong>Errores Globales (__all__):</strong>
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    {% if form.errors and not form.non_field_errors %}
+        <div class="field-errors-summary">
+            <strong>Errores en campos específicos:</strong>
+            <p>Por favor revise los campos indicados abajo.</p>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'producto_nuevo' %}" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Regresar al Inicio</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
