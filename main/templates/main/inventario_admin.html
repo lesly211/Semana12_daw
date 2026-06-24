@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %}
+{% block title %}Inventario Admin - Permisos{% endblock %}
+{% block extra_css %}
+<style>
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+    }
+    .admin-table th, .admin-table td {
+        padding: 1rem 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+    .admin-table td {
+        color: var(--text-primary);
+    }
+    .admin-table tr:last-child td {
+        border-bottom: none;
+    }
+    .badge {
+        padding: 0.25rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .badge-ok {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+    }
+    .badge-fail {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="glass-card">
+    <h1>Inventario Restringido (PermissionRequiredMixin)</h1>
+    <p class="subtitle">Esta vista está protegida utilizando <code>PermissionRequiredMixin</code> de Django. Solo los usuarios con el permiso <code>main.view_producto</code> pueden visualizar esta información.</p>
+    
+    <div style="margin-top: 2rem;">
+        <h3>Listado de Control de Stock</h3>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod in productos %}
+                    <tr>
+                        <td><strong>{{ prod.nombre }}</strong></td>
+                        <td>{{ prod.get_categoria_display }}</td>
+                        <td>S/. {{ prod.precio }}</td>
+                        <td>{{ prod.stock }} unidades</td>
+                        <td>
+                            {% if prod.disponible %}
+                                <span class="badge badge-ok">Activo</span>
+                            {% else %}
+                                <span class="badge badge-fail">Inactivo</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--text-secondary);">No hay productos en inventario.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}
