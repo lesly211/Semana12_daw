@@ -1,6 +1,4 @@
-{% extends 'main/base.html' %}
-{% block title %}Contacto - Formulario Clásico{% endblock %}
-{% block extra_css %}
+{% extends 'main/base.html' %} {% block title %}Contacto{% endblock %} {% block extra_css %}
 <style>
     .global-errors {
         background: rgba(239, 68, 68, 0.15);
@@ -10,6 +8,7 @@
         margin-bottom: 1.5rem;
         color: #fca5a5;
     }
+    
     .field-errors-summary {
         background: rgba(245, 158, 11, 0.1);
         border: 1px solid rgba(245, 158, 11, 0.2);
@@ -18,6 +17,7 @@
         margin-bottom: 1.5rem;
         color: #fde68a;
     }
+    
     .success-data-card {
         background: rgba(16, 185, 129, 0.05);
         border: 1px solid rgba(16, 185, 129, 0.2);
@@ -26,6 +26,7 @@
         margin-top: 2.5rem;
         animation: fadeIn 0.5s ease-out;
     }
+    
     .success-data-card h3 {
         color: #34d399;
         margin-bottom: 1rem;
@@ -34,51 +35,53 @@
         gap: 0.5rem;
         font-size: 1.3rem;
     }
+    
     .data-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 1rem;
     }
-    .data-table th, .data-table td {
+    
+    .data-table th,
+    .data-table td {
         padding: 0.85rem 1rem;
         text-align: left;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+    
     .data-table th {
         color: var(--text-secondary);
         font-weight: 600;
         width: 30%;
     }
+    
     .data-table td {
         color: var(--text-primary);
     }
-    .data-table tr:last-child td, .data-table tr:last-child th {
+    
+    .data-table tr:last-child td,
+    .data-table tr:last-child th {
         border-bottom: none;
     }
 </style>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <div class="glass-card">
     <h1>{{ titulo }}</h1>
     <p class="subtitle">Formulario de contacto clásico con validaciones por campo y de tipo cruzado.</p>
 
     {% if form.non_field_errors %}
-        <div class="global-errors">
-            <strong>Errores Globales (__all__):</strong>
-            {{ form.non_field_errors }}
-        </div>
-    {% endif %}
-
-    {% if form.errors and not form.non_field_errors %}
-        <div class="field-errors-summary">
-            <strong>Errores en campos específicos:</strong>
-            <p>Por favor revise los campos indicados abajo.</p>
-        </div>
+    <div class="global-errors">
+        <strong>Errores Globales (__all__):</strong> {{ form.non_field_errors }}
+    </div>
+    {% endif %} {% if form.errors and not form.non_field_errors %}
+    <div class="field-errors-summary">
+        <strong>Errores en campos específicos:</strong>
+        <p>Por favor revise los campos indicados abajo.</p>
+    </div>
     {% endif %}
 
     <form method="POST" action="{% url 'contacto' %}" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
+        {% csrf_token %} {{ form.as_p }}
         <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
             <button type="submit" class="btn btn-primary">✉️ Enviar Mensaje</button>
             <a href="{% url 'home' %}" class="btn btn-secondary">Regresar al Inicio</a>
@@ -86,32 +89,32 @@
     </form>
 
     {% if datos_enviados %}
-        <div class="success-data-card">
-            <h3>✓ Datos Recibidos y Validados con Éxito</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">El servidor procesó el POST de forma segura y sanitizada:</p>
-            <table class="data-table">
-                <tr>
-                    <th>Nombre</th>
-                    <td>{{ datos_enviados.nombre }}</td>
-                </tr>
-                <tr>
-                    <th>Correo Electrónico</th>
-                    <td>{{ datos_enviados.correo }}</td>
-                </tr>
-                <tr>
-                    <th>Asunto</th>
-                    <td>{{ datos_enviados.asunto }}</td>
-                </tr>
-                <tr>
-                    <th>Mensaje</th>
-                    <td>{{ datos_enviados.mensaje|linebreaksbr }}</td>
-                </tr>
-                <tr>
-                    <th>Suscribirse al Boletín</th>
-                    <td>{% if datos_enviados.recibir_boletin %}Sí{% else %}No{% endif %}</td>
-                </tr>
-            </table>
-        </div>
+    <div class="success-data-card">
+        <h3>✓ Datos Recibidos y Validados con Éxito</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">El servidor procesó el POST de forma segura y sanitizada:</p>
+        <table class="data-table">
+            <tr>
+                <th>Nombre</th>
+                <td>{{ datos_enviados.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Correo Electrónico</th>
+                <td>{{ datos_enviados.correo }}</td>
+            </tr>
+            <tr>
+                <th>Asunto</th>
+                <td>{{ datos_enviados.asunto }}</td>
+            </tr>
+            <tr>
+                <th>Mensaje</th>
+                <td>{{ datos_enviados.mensaje|linebreaksbr }}</td>
+            </tr>
+            <tr>
+                <th>Suscribirse al Boletín</th>
+                <td>{% if datos_enviados.recibir_boletin %}Sí{% else %}No{% endif %}</td>
+            </tr>
+        </table>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

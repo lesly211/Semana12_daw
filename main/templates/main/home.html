@@ -1,11 +1,10 @@
-{% extends 'main/base.html' %}
-{% block title %}Inicio - Listado de Productos{% endblock %}
-{% block extra_css %}
+{% extends 'main/base.html' %} {% block title %}Inicio - Listado de Productos{% endblock %} {% block extra_css %}
 <style>
     .welcome-banner {
         text-align: center;
         margin-bottom: 3rem;
     }
+    
     .welcome-banner h1 {
         font-size: 2.8rem;
         background: var(--primary-gradient);
@@ -13,18 +12,21 @@
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.5rem;
     }
+    
     .welcome-banner p {
         color: var(--text-secondary);
         font-size: 1.2rem;
         max-width: 600px;
         margin: 0 auto;
     }
+    
     .action-cards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
         margin-bottom: 3rem;
     }
+    
     .action-card {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--card-border);
@@ -37,26 +39,31 @@
         justify-content: space-between;
         align-items: center;
     }
+    
     .action-card:hover {
         transform: translateY(-5px);
         background: rgba(255, 255, 255, 0.04);
         border-color: rgba(168, 85, 247, 0.3);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
+    
     .action-icon {
         font-size: 2.5rem;
         margin-bottom: 1rem;
     }
+    
     .action-card h3 {
         font-size: 1.4rem;
         margin-bottom: 0.5rem;
     }
+    
     .action-card p {
         color: var(--text-secondary);
         font-size: 0.95rem;
         margin-bottom: 1.5rem;
         line-height: 1.5;
     }
+    
     .section-title {
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
@@ -66,11 +73,13 @@
         border-bottom: 1px solid var(--card-border);
         padding-bottom: 0.5rem;
     }
+    
     .product-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.5rem;
     }
+    
     .product-card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
@@ -82,11 +91,13 @@
         transition: all 0.3s ease;
         position: relative;
     }
+    
     .product-card:hover {
         border-color: var(--accent-cyan);
         transform: scale(1.02);
         box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
     }
+    
     .product-category {
         align-self: flex-start;
         font-size: 0.75rem;
@@ -99,12 +110,14 @@
         margin-bottom: 1rem;
         letter-spacing: 0.05em;
     }
+    
     .product-name {
         font-size: 1.3rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
         color: var(--text-primary);
     }
+    
     .product-desc {
         color: var(--text-secondary);
         font-size: 0.9rem;
@@ -112,6 +125,7 @@
         margin-bottom: 1.25rem;
         flex-grow: 1;
     }
+    
     .product-meta {
         display: flex;
         justify-content: space-between;
@@ -119,6 +133,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.05);
         padding-top: 1rem;
     }
+    
     .product-price {
         font-size: 1.4rem;
         font-weight: 700;
@@ -127,24 +142,29 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    
     .product-stock {
         font-size: 0.85rem;
         color: var(--text-secondary);
     }
+    
     .stock-badge {
         font-weight: 600;
         padding: 0.15rem 0.5rem;
         border-radius: 4px;
         margin-left: 0.25rem;
     }
+    
     .stock-badge.in-stock {
         background: rgba(16, 185, 129, 0.15);
         color: #34d399;
     }
+    
     .stock-badge.out-of-stock {
         background: rgba(239, 68, 68, 0.15);
         color: #fca5a5;
     }
+    
     .empty-state {
         grid-column: 1 / -1;
         text-align: center;
@@ -154,15 +174,15 @@
         border-radius: 16px;
         color: var(--text-secondary);
     }
+    
     .empty-state p {
         margin-bottom: 1.5rem;
     }
 </style>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <div class="welcome-banner">
-    <h1>Formularios y Plantillas en Django</h1>
-    <p>Explora la implementación de ModelForm y Formulario Clásico con validaciones y estilos premium.</p>
+    <h1>Formularios</h1>
+    <p>Formulario Clásico de ventas</p>
 </div>
 <div class="action-cards">
     <div class="action-card">
@@ -185,36 +205,29 @@
 <div class="products-section">
     <h2 class="section-title">📦 Productos Registrados</h2>
     <div class="product-grid">
-        {% if productos %}
-            {% for prod in productos %}
-                <div class="product-card">
-                    <span class="product-category">{{ prod.get_categoria_display }}</span>
-                    <h4 class="product-name">{{ prod.nombre }}</h4>
-                    <p class="product-desc">
-                        {% if prod.descripcion %}
-                            {{ prod.descripcion }}
-                        {% else %}
-                            <i>Sin descripción disponible.</i>
-                        {% endif %}
-                    </p>
-                    <div class="product-meta">
-                        <span class="product-price">S/. {{ prod.precio }}</span>
-                        <span class="product-stock">
+        {% if productos %} {% for prod in productos %}
+        <div class="product-card">
+            <span class="product-category">{{ prod.get_categoria_display }}</span>
+            <h4 class="product-name">{{ prod.nombre }}</h4>
+            <p class="product-desc">
+                {% if prod.descripcion %} {{ prod.descripcion }} {% else %}
+                <i>Sin descripción disponible.</i> {% endif %}
+            </p>
+            <div class="product-meta">
+                <span class="product-price">S/. {{ prod.precio }}</span>
+                <span class="product-stock">
                             Stock: 
                             {% if prod.stock > 0 and prod.disponible %}
-                                <span class="stock-badge in-stock">{{ prod.stock }}</span>
-                            {% else %}
-                                <span class="stock-badge out-of-stock">Agotado</span>
-                            {% endif %}
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="empty-state">
-                <p>No hay productos registrados en la base de datos actualmente.</p>
-                <a href="{% url 'producto_nuevo' %}" class="btn btn-primary">Registrar el primer producto</a>
+                                <span class="stock-badge in-stock">{{ prod.stock }}</span> {% else %}
+                <span class="stock-badge out-of-stock">Agotado</span> {% endif %}
+                </span>
             </div>
+        </div>
+        {% endfor %} {% else %}
+        <div class="empty-state">
+            <p>No hay productos registrados en la base de datos actualmente.</p>
+            <a href="{% url 'producto_nuevo' %}" class="btn btn-primary">Registrar el primer producto</a>
+        </div>
         {% endif %}
     </div>
 </div>
